@@ -1,0 +1,34 @@
+
+name: Compare GitHub vs Docker Tags 
+
+on:
+  workflow_call:
+    inputs:
+      repo_github:
+        description: "Image Directory: "
+        type: string
+        required: true
+      repo_docker:
+        description: "Image Directory: "
+        type: string
+        required: true
+    outputs:
+      docker_version:
+        value: ${{ jobs.github_vs_docker.outputs.docker_version }}
+      repo_version:
+        value: ${{ jobs.github_vs_docker.outputs.repo_version }}
+
+jobs:
+  github_vs_docker:
+    runs-on: [ ubuntu-latest ]
+    outputs:
+      docker_version: ${{ steps.docker.outputs.docker_version }}
+      repo_version: ${{ steps.repo.outputs.repo_version }}
+    steps:
+      - name: Get Latest Release
+        run: echo "repo_version=$(curl -s 'https://api.github.com/repos/${{ inputs.repo_github }}/releases/latest'|jq -r .tag_name)" >> $GITHUB_OUTPUT
+        id: repo
+
+      - name: Get Docker Releases
+        run: echo "docker_version=$(curl -s 'https://hub.docker.com/v2/repositories/${{ inputs.repo_docker }}/tags'|jq -r .results[].name|paste -s -d, -)" >> $GITHUB_OUTPUT
+        id: docker
