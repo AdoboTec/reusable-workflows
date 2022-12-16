@@ -26,7 +26,7 @@ on:
         required: true
 
 jobs:
-  build_scan_push:
+  build_push:
     runs-on: [ ubuntu-latest ]
     steps:
       - name: Checkout Code
