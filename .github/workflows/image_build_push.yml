@@ -7,6 +7,10 @@ on:
         description: "Image Directory: "
         type: string
         required: true
+      image_name:
+        description: "Image name: "
+        type: string
+        required: true
       image_version:
         description: "Image verion: "
         type: string
@@ -46,8 +50,8 @@ jobs:
           context: ${{ github.workspace }}/${{ inputs.directory }}
           platforms: linux/amd64,linux/arm/v7
           tags: |
-            ${{ inputs.docker_owner }}/${{ inputs.directory }}:${{ inputs.image_version }}
-            ${{ inputs.docker_owner }}/${{ inputs.directory }}:latest
+            ${{ inputs.docker_owner }}/${{ inputs.image_name }}:${{ inputs.image_version }}
+            ${{ inputs.docker_owner }}/${{ inputs.image_name }}:latest
           # build on feature branches, push only on main branch
           push: ${{ github.ref == 'refs/heads/main' }}
           build-args: |
