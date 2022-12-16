@@ -26,7 +26,7 @@ jobs:
       repo_version: ${{ steps.repo.outputs.repo_version }}
     steps:
       - name: Get Latest Release
-        run: echo "repo_version=$(curl -s 'https://api.github.com/repos/${{ inputs.repo_github }}/releases/latest'|jq -r .tag_name)" >> $GITHUB_OUTPUT
+        run: echo "repo_version=$(curl -s 'https://api.github.com/repos/${{ inputs.repo_github }}/releases/latest'|jq -r .tag_name|sed 's/^v//')" >> $GITHUB_OUTPUT
         id: repo
 
       - name: Get Docker Releases
