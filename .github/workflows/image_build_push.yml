@@ -44,6 +44,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: ${{ github.workspace }}/${{ inputs.directory }}
+          platforms: linux/amd64,linux/arm/v7
           tags: |
             ${{ inputs.docker_owner }}/${{ inputs.directory }}:${{ inputs.image_version }}
             ${{ inputs.docker_owner }}/${{ inputs.directory }}:latest
