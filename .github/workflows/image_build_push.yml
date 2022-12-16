@@ -52,3 +52,5 @@ jobs:
           push: ${{ github.ref == 'refs/heads/main' }}
           build-args: |
             VERSION: ${{ inputs.image_version }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
