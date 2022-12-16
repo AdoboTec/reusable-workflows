@@ -54,7 +54,6 @@ jobs:
             ${{ inputs.docker_owner }}/${{ inputs.image_name }}:latest
           # build on feature branches, push only on main branch
           push: ${{ github.ref == 'refs/heads/main' }}
-          build-args: |
-            IMG_VERSION: ${{ inputs.image_version }}
+          build-args: IMG_VERSION=${{ inputs.image_version }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
