@@ -1,2 +1,2 @@
 # reusable-workflows
-AdoboTEc Collection of Reusable Workflows
+AdoboTec Collection of Reusable Workflows
