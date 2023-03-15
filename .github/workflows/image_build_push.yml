@@ -45,16 +45,19 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: |
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ inputs.image_version }}
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=semver,pattern={{version}},value=v${{ inputs.image_version }}
+          flavor: |
+            latest=true
 
       - name: Push Image
         uses: docker/build-push-action@v2
         with:
           context: ${{ github.workspace }}/${{ inputs.directory }}
           platforms: linux/amd64 #,linux/arm/v7 # Disable ARM
-          tags: ${{ steps.meta.outputs.images }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
           # build on feature branches, push only on main branch
           push: ${{ github.ref == 'refs/heads/main' }}
           build-args: IMG_VERSION=${{ inputs.image_version }}
