@@ -31,5 +31,7 @@ jobs:
 
       - name: Get GHCR Releases
         run: |
+          GHCR_TOKEN=$(echo ${{ secrets.GITHUB_TOKEN }} | base64)
+          curl -H "Authorization: Bearer {GHCR_TOKEN}" https://ghcr.io/v2/${{ inputs.repo_docker }}/tags/list
           echo "docker_version=$(curl -H 'Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' -s 'https://ghcr.io/v2/${{ inputs.repo_docker }}/tags/list')" >> $GITHUB_OUTPUT
         id: docker
